@@ -32,24 +32,6 @@ Thi s project assumes that you already have a OneSignal app created with push no
 
 [Add relevant code snippets or additional context if necessary]
 
-# Support
-
-## Ask a question about OneSignal
-
-You can ask questions about the OneSignal xxx SDK and related topics in the **onesignal-xxx-sdk** repository.
-
-🙋‍♂️ [Ask a question](#)
-
-[☝️ Update link to SDK repo issue template]
-
-## Create a bug report
-
-If you receive an error message or get blocked by an issue, please create a bug report!
-
-🪳 [Create bug report](#)
-
-[☝️ Update link to SDK repo issue template]
-
 # ❤️ Developer Community
 
 For additional resources, please join the [OneSignal Developer Community](https://onesignal.com/onesignal-developers).
