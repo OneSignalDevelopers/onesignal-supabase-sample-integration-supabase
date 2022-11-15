@@ -16,11 +16,34 @@
 
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
-This project demonstrates sending push notifications using [**OneSignal XYZ SDK**]. You can use this project as a boilerplate or reference to start your project.
+This project demonstrates sending push notifications using [Edge Functions](https://supabase.com/docs/guides/functions) hosted on Supabase. You can use function implemented in this sample as a reference for using OneSignal in your Supabase deployment.
 
 ## 🚦 Getting started
 
-Thi s project assumes that you already have a OneSignal app created with push notifications setup. If you don't yet have a OneSignal app, [create one](https://documentation.onesignal.com/docs/apps-organizations#create-an-app) first, then follow the steps below to integrate the OneSignal SDK into your [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) app.
+This project assumes that you already have a few things setup
+* OneSignal app with push notifications configured. If you don't have one configured, follow these [instructions to create your first app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app).
+* Mobile app with OneSignal integrated. If you don't have OneSignal integrated in your app, then follow the steps for [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) to get your app setup to receive notifications from OneSignal.
+* Supabase CLI installed on your system. If you don't have the CLI installed on your system, head to the [Supabase CLI docs](https://supabase.com/docs/guides/cli#installation) for instructions to get started.
+
+---
+
+## Initialize Supabase Project
+
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ supabase projects create onesignal-supabase-edge-function-sample -i
+```
+
+[![asciicast](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY.svg)](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY)
+
+## Create Edge Function
+
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ supabase functions new onesignal-push-message
+```
+
+[![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
 ```md
 1. Step 1
