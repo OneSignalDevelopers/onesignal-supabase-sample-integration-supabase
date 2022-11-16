@@ -34,6 +34,8 @@ This project assumes that you already have a few things setup
 ╰─$ supabase projects create onesignal-supabase-edge-function-sample -i
 ```
 
+Entering this command should result in an interactive prompt to configure a new Supabase project as shown below.
+
 [![asciicast](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY.svg)](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY)
 
 ## Create Edge Function
@@ -43,13 +45,10 @@ This project assumes that you already have a few things setup
 ╰─$ supabase functions new onesignal-push-message
 ```
 
+The Supabase CLI's command to create a function will add the boilerplate for an edge function located in a directory with the name specified in the command,  `onesignal-push-message/index.ts`.
+
 [![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
-```md
-1. Step 1
-2. Step 2
-3. Step 3
-```
 
 [☝️ replace with actual steps]
 
