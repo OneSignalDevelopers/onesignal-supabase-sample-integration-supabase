@@ -100,6 +100,57 @@ You can also remove variables in case you make a mistake.
 Finished supabase secrets unset.
 ```
 
+## Deploying
+
+When developing Supabase Edge Functions we have the ability to deploy to a local or production environment. Running in the local environment allows you to easily test and quickly iterate on your implementation.
+
+### Local deployment
+To deploy this sample to a local Supabase instance:
+1. Start Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`.
+2. To serve the function, run `supabase functions serve onesignal-push-message --env-file ./supabase/.env.local --debug`
+3. Submit request to the endpoint making sure to use the **anon key** as your bearer token.
+
+Result of running `supabase start`
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ supabase start                                                                                                                                                1 ↵
+Seeding data supabase/seed.sql...
+Started supabase local development setup.
+
+         API URL: http://localhost:54321
+          DB URL: postgresql://postgres:postgres@localhost:54322/postgres
+      Studio URL: http://localhost:54323
+    Inbucket URL: http://localhost:54324
+      JWT secret: super-secret-jwt-token-with-at-least-32-characters-long
+        anon key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs
+service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSJ9.vI9obAHOGyVVKa3pD--kJlyxp-Z2zV9UUMAhKpNLAcU
+```
+
+Serving a function to the local instance of Supabase.
+
+[![asciicast](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV.svg)](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV)
+
+Once the function is deployed, you can post a request to execute it.
+
+```cURL
+# Making request to local Supabase function
+curl -X "POST" "http://localhost:54321/functions/v1/onesignal-push-message" \
+     -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs' \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "message": "test"
+}'
+```
+
+### Deploying to production
+
+Supabase makes deploying your project to production simple with their CLI.
+
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ supabase functions deploy onesignal-push-message
+```
+
 # ❤️ Developer Community
 
 For additional resources, please join the [OneSignal Developer Community](https://onesignal.com/onesignal-developers).
