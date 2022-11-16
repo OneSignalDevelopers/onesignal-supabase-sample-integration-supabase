@@ -1,5 +1,5 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
-import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta4"
+import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
 
 serve(async (req) => {
   // Load secrets
