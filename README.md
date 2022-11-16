@@ -23,7 +23,8 @@ This project demonstrates sending push notifications using [Edge Functions](http
 This project assumes that you already have a few things setup
 * OneSignal app with push notifications configured. If you don't have one configured, follow these [instructions to create your first app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app).
 * Mobile app with OneSignal integrated. If you don't have OneSignal integrated in your app, then follow the steps for [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) to get your app setup to receive notifications from OneSignal.
-* Supabase CLI installed on your system. If you don't have the CLI installed on your system, head to the [Supabase CLI docs](https://supabase.com/docs/guides/cli#installation) for instructions to get started.
+* Supabase CLI installed on your system. If you don't have the CLI installed on your system, head to the [Supabase CLI docs](https://supabase.com/docs/guides/cli#installation) for instructions to get started (this sample uses [v1.14.0](https://www.npmjs.com/package/supabase/v/1.14.0)).
+* Deno installed on your system (this sample uses v1.28.0). See [Deno install instructions](https://github.com/denoland/deno_install) for steps to install Deno on your system.
 
 ---
 
@@ -49,10 +50,55 @@ The Supabase CLI's command to create a function will add the boilerplate for an 
 
 [![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
+## Writing Logic in Edge Function
 
-[☝️ replace with actual steps]
+Supabase Edge Functions are executed in the Deno enfironment on the edge. This carries a couple of implications
 
-[Add relevant code snippets or additional context if necessary]
+* Functions are written in TypeScript
+* You cannot install packages using npm or Yarn
+
+To add to logic to the function, open `onesignal-push-message/index.ts` in your text editor. To start, We'll need to import _onesignal-node-api_, but as previously mentioned, we can't install packages using the typical mechanisms. To get around this, we can use [esm.sh](https://esm.sh) which is a fast, global content delivery network for NPM packages.
+
+We import the OneSignal package by specifying the URL where Deno can download it from.
+
+```ts
+import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
+```
+
+Importing the package in this way is effective to installing it, so now we can move on to ensuring our script has access to the values needed to intialize the OneSignal API client.
+
+```ts
+const appId = Deno.env.get("APP_ID")!
+const userAuthKey = Deno.env.get("USER_AUTH_KEY")!
+const restApiKey = Deno.env.get("REST_API_KEY")!
+```
+
+Deno exposes variables loaded from the environment in the object `Deno.env`. When doing local development, you can set environment variables in a file named `supabase/.env.local`.
+
+Copy the [.env.example](supabase/.env.example) file in this repo and fill in the values with your own from OneSignal.
+
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ cp supabase/.env.example supabase/.env.local
+```
+
+You can set environent variables in the production environment by using the Supabase CLI.
+
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ supabase secrets set test=123
+Finished supabase secrets set.
+```
+
+[![asciicast](https://asciinema.org/a/HC1zFYiSHKskmTyD0yG0IVB68.svg)](https://asciinema.org/a/HC1zFYiSHKskmTyD0yG0IVB68)
+
+You can also remove variables in case you make a mistake.
+
+```bash
+╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
+╰─$ supabase secrets unset test
+Finished supabase secrets unset.
+```
 
 # ❤️ Developer Community
 
@@ -60,11 +106,11 @@ For additional resources, please join the [OneSignal Developer Community](https:
 
 Get in touch with us or learn more about OneSignal through the channels below.
 
-- [Follow us on Twitter](https://twitter.com/onesignaldevs) to never miss any updates from the OneSignal team, ecosystem & community
-- [Join us on Discord](https://discord.gg/EP7gf6Uz7G) to be a part of the OneSignal Developers community, showcase your work and connect with other OneSignal developers
-- [Read the OneSignal Blog](https://onesignal.com/blog/) for the latest announcements, tutorials, in-depth articles & more.
-- [Subscribe to us on YouTube](https://www.youtube.com/channel/UCe63d5EDQsSkOov-bIE_8Aw/featured) for walkthroughs, courses, talks, workshops & more.
-- [Follow us on Twitch](https://www.twitch.tv/onesignaldevelopers) for live streams, office hours, support & more.
+* [Follow us on Twitter](https://twitter.com/onesignaldevs) to never miss any updates from the OneSignal team, ecosystem & community
+* [Join us on Discord](https://discord.gg/EP7gf6Uz7G) to be a part of the OneSignal Developers community, showcase your work and connect with other OneSignal developers
+* [Read the OneSignal Blog](https://onesignal.com/blog/) for the latest announcements, tutorials, in-depth articles & more.
+* [Subscribe to us on YouTube](https://www.youtube.com/channel/UCe63d5EDQsSkOov-bIE_8Aw/featured) for walkthroughs, courses, talks, workshops & more.
+* [Follow us on Twitch](https://www.twitch.tv/onesignaldevelopers) for live streams, office hours, support & more.
 
 ## Show your support
 
