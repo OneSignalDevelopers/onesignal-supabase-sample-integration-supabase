@@ -9,18 +9,8 @@ serve(async (req) => {
 
   // Create OneSignal client
   const configuration = OneSignal.createConfiguration({
-    authMethods: {
-      user_key: {
-        tokenProvider: {
-          getToken: () => userAuthKey,
-        },
-      },
-      app_key: {
-        tokenProvider: {
-          getToken: () => restApiKey,
-        },
-      },
-    },
+    userKey: userAuthKey,
+    appKey: restApiKey,
   })
   const client = new OneSignal.DefaultApi(configuration)
 
