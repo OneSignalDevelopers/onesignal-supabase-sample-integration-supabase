@@ -41,6 +41,8 @@ Entering this command should result in an interactive prompt to configure a new 
 
 ## Create Edge Function
 
+Note that this sample already includes an implementation of an edge function. The following instructions are simply to explain how to add your own.
+
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
 ╰─$ supabase functions new onesignal-push-message
