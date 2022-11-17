@@ -21,10 +21,11 @@ This project demonstrates sending push notifications using [Edge Functions](http
 ## 🚦 Getting started
 
 This project assumes that you already have a few things setup
-* OneSignal app with push notifications configured. If you don't have one configured, follow these [instructions to create your first app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app).
-* Mobile app with OneSignal integrated. If you don't have OneSignal integrated in your app, then follow the steps for [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) to get your app setup to receive notifications from OneSignal.
-* Supabase CLI installed on your system. If you don't have the CLI installed on your system, head to the [Supabase CLI docs](https://supabase.com/docs/guides/cli#installation) for instructions to get started (this sample uses [v1.14.0](https://www.npmjs.com/package/supabase/v/1.14.0)).
-* Deno installed on your system (this sample uses v1.28.0). See [Deno install instructions](https://github.com/denoland/deno_install) for steps to install Deno on your system.
+
+- OneSignal app with push notifications configured. If you don't have one configured, follow these [instructions to create your first app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app).
+- Mobile app with OneSignal integrated. If you don't have OneSignal integrated in your app, then follow the steps for [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) to get your app setup to receive notifications from OneSignal.
+- Supabase CLI installed on your system. If you don't have the CLI installed on your system, head to the [Supabase CLI docs](https://supabase.com/docs/guides/cli#installation) for instructions to get started (this sample uses [v1.14.0](https://www.npmjs.com/package/supabase/v/1.14.0)).
+- Deno installed on your system (this sample uses v1.28.0). See [Deno install instructions](https://github.com/denoland/deno_install) for steps to install Deno on your system.
 
 ---
 
@@ -45,10 +46,10 @@ Note that this sample already includes an implementation of an edge function. Th
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase functions new onesignal-push-message
+╰─$ supabase functions new push
 ```
 
-The Supabase CLI's command to create a function will add the boilerplate for an edge function located in a directory with the name specified in the command,  `onesignal-push-message/index.ts`.
+The Supabase CLI's command to create a function will add the boilerplate for an edge function located in a directory with the name specified in the command, `push/index.ts`.
 
 [![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
@@ -56,10 +57,10 @@ The Supabase CLI's command to create a function will add the boilerplate for an 
 
 Supabase Edge Functions are executed in the Deno enfironment on the edge. This carries a couple of implications
 
-* Functions are written in TypeScript
-* You cannot install packages using npm or Yarn
+- Functions are written in TypeScript
+- You cannot install packages using npm or Yarn
 
-To add to logic to the function, open `onesignal-push-message/index.ts` in your text editor. To start, We'll need to import _onesignal-node-api_, but as previously mentioned, we can't install packages using the typical mechanisms. To get around this, we can use [esm.sh](https://esm.sh) which is a fast, global content delivery network for NPM packages.
+To add to logic to the function, open `push/index.ts` in your text editor. To start, We'll need to import _onesignal-node-api_, but as previously mentioned, we can't install packages using the typical mechanisms. To get around this, we can use [esm.sh](https://esm.sh) which is a fast, global content delivery network for NPM packages.
 
 We import the OneSignal package by specifying the URL where Deno can download it from.
 
@@ -107,12 +108,15 @@ Finished supabase secrets unset.
 When developing Supabase Edge Functions we have the ability to deploy to a local or production environment. Running in the local environment allows you to easily test and quickly iterate on your implementation.
 
 ### Local deployment
+
 To deploy this sample to a local Supabase instance:
+
 1. Start Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`.
-2. To serve the function, run `supabase functions serve onesignal-push-message --env-file ./supabase/.env.local --debug`
+2. To serve the function, run `supabase functions serve push --env-file ./supabase/.env.local --debug`
 3. Submit request to the endpoint making sure to use the **anon key** as your bearer token.
 
 Result of running `supabase start`
+
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
 ╰─$ supabase start                                                                                                                                                1 ↵
@@ -132,26 +136,48 @@ Serving a function to the local instance of Supabase.
 
 [![asciicast](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV.svg)](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV)
 
-Once the function is deployed, you can post a request to execute it.
-
-```cURL
-# Making request to local Supabase function
-curl -X "POST" "http://localhost:54321/functions/v1/onesignal-push-message" \
-     -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs' \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "message": "test"
-}'
-```
-
 ### Deploying to production
 
 Supabase makes deploying your project to production simple with their CLI.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase functions deploy onesignal-push-message
+╰─$ supabase functions deploy push
 ```
+
+If the command ☝️ doesn't work for you, try executing the command with the `--legacy-bundle` flag set.
+
+[![asciicast](https://asciinema.org/a/nHeUle77fZcsoyXAMzwcB3329.svg)](https://asciinema.org/a/nHeUle77fZcsoyXAMzwcB3329)
+
+## How to Test Supabase Edge Function
+
+Send a HTTP request to the deployed function to test its implementation.
+
+```cURL
+# Submitting HTTP request to function hosted locally.
+curl -X "POST" "http://localhost:54321/functions/v1/push" \
+     -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs' \
+     -H 'Content-Type: application/json; charset=utf-8' \
+     -d $'{
+  "message": "Local function test"
+}'
+```
+
+![Local function response](assets/testing-local-function.gif)
+
+### Debugging deployed functions
+
+ The [Supabase dashboard](https://app.supabase.com/) presents all deployed functions along with its time of deployment and status.
+
+![Functions deployed to production](assets/edge-functions.png)
+
+#### How to inspect the HTTP request sent to the edge function
+
+![Inspecting function requests](assets/edge-function-invocations.gif)
+
+#### How to review the response from the edge function
+
+![Reviewing function logs](assets/edge-function-logs.gif)
 
 # ❤️ Developer Community
 
@@ -159,11 +185,11 @@ For additional resources, please join the [OneSignal Developer Community](https:
 
 Get in touch with us or learn more about OneSignal through the channels below.
 
-* [Follow us on Twitter](https://twitter.com/onesignaldevs) to never miss any updates from the OneSignal team, ecosystem & community
-* [Join us on Discord](https://discord.gg/EP7gf6Uz7G) to be a part of the OneSignal Developers community, showcase your work and connect with other OneSignal developers
-* [Read the OneSignal Blog](https://onesignal.com/blog/) for the latest announcements, tutorials, in-depth articles & more.
-* [Subscribe to us on YouTube](https://www.youtube.com/channel/UCe63d5EDQsSkOov-bIE_8Aw/featured) for walkthroughs, courses, talks, workshops & more.
-* [Follow us on Twitch](https://www.twitch.tv/onesignaldevelopers) for live streams, office hours, support & more.
+- [Follow us on Twitter](https://twitter.com/onesignaldevs) to never miss any updates from the OneSignal team, ecosystem & community
+- [Join us on Discord](https://discord.gg/EP7gf6Uz7G) to be a part of the OneSignal Developers community, showcase your work and connect with other OneSignal developers
+- [Read the OneSignal Blog](https://onesignal.com/blog/) for the latest announcements, tutorials, in-depth articles & more.
+- [Subscribe to us on YouTube](https://www.youtube.com/channel/UCe63d5EDQsSkOov-bIE_8Aw/featured) for walkthroughs, courses, talks, workshops & more.
+- [Follow us on Twitch](https://www.twitch.tv/onesignaldevelopers) for live streams, office hours, support & more.
 
 ## Show your support
 
