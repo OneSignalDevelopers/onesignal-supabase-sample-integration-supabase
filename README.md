@@ -22,14 +22,14 @@ This project demonstrates sending push notifications using [Edge Functions](http
 
 This project assumes that you already have a few things setup
 
-- OneSignal app with push notifications configured. If you don't have one configured, follow these [instructions to create your first app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app).
-- Mobile app with OneSignal integrated. If you don't have OneSignal integrated in your app, then follow the steps for [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) to get your app setup to receive notifications from OneSignal.
-- Supabase CLI installed on your system. If you don't have the CLI installed on your system, head to the [Supabase CLI docs](https://supabase.com/docs/guides/cli#installation) for instructions to get started (this sample uses [v1.14.0](https://www.npmjs.com/package/supabase/v/1.14.0)).
-- Deno installed on your system (this sample uses v1.28.0). See [Deno install instructions](https://github.com/denoland/deno_install) for steps to install Deno on your system.
+- [OneSignal app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app) created.
+- [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) app integrated with a [OneSignal SDK](https://github.com/onesignal/sdks).
+- [Supabase CLI](https://supabase.com/docs/guides/cli#installation) [v1.14.0](https://www.npmjs.com/package/supabase/v/1.14.0) installed.
+- [Deno](https://github.com/denoland/deno_install) v1.28.0 installed.
 
 ---
 
-## Initialize Supabase Project
+## How to Initialize the Supabase Project
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
@@ -40,7 +40,7 @@ Entering this command should result in an interactive prompt to configure a new 
 
 [![asciicast](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY.svg)](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY)
 
-## Create Edge Function
+## How to Create the Function
 
 Note that this sample already includes an implementation of an edge function. The following instructions are simply to explain how to add your own.
 
@@ -53,7 +53,7 @@ The Supabase CLI's command to create a function will add the boilerplate for an 
 
 [![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
-## Writing Logic in Edge Function
+## How to Implement the Function
 
 Supabase Edge Functions are executed in the Deno enfironment on the edge. This carries a couple of implications
 
