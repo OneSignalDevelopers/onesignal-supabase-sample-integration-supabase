@@ -53,22 +53,22 @@ The Supabase CLI's command to create a function will add the boilerplate for an 
 
 [![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
-## How to Implement the Function
+## Function Implementation
 
-Supabase Edge Functions are executed in the Deno enfironment on the edge. This carries a couple of implications
+Supabase Edge Functions are executed in the Deno enfironment on the edge which means:
 
 - Functions are written in TypeScript
-- You cannot install packages using npm or Yarn
+- You can't install packages with a package manager like npm or Yarn
 
-To add to logic to the function, open `push/index.ts` in your text editor. To start, We'll need to import _onesignal-node-api_, but as previously mentioned, we can't install packages using the typical mechanisms. To get around this, we can use [esm.sh](https://esm.sh) which is a fast, global content delivery network for NPM packages.
+Function logic is implemented in `push/index.ts`.
 
-We import the OneSignal package by specifying the URL where Deno can download it from.
+Since packages can't be installed using a traditional package manager, I'm using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the module.
 
 ```ts
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
 ```
 
-Importing the package in this way is effective to installing it, so now we can move on to ensuring our script has access to the values needed to intialize the OneSignal API client.
+I can load environment variables exposed in Deno's `Deno.env` object.
 
 ```ts
 const appId = Deno.env.get("APP_ID")!
@@ -76,16 +76,50 @@ const userAuthKey = Deno.env.get("USER_AUTH_KEY")!
 const restApiKey = Deno.env.get("REST_API_KEY")!
 ```
 
-Deno exposes variables loaded from the environment in the object `Deno.env`. When doing local development, you can set environment variables in a file named `supabase/.env.local`.
+I have to create a OneSignal API client before send a request to the API.
 
-Copy the [.env.example](supabase/.env.example) file in this repo and fill in the values with your own from OneSignal.
+```ts
+// Create OneSignal client
+const configuration = OneSignal.createConfiguration({
+  userKey: userAuthKey,
+  appKey: restApiKey,
+})
+const client = new OneSignal.DefaultApi(configuration)
+```
+
+And a notification.
+
+```ts
+const notification = new OneSignal.Notification()
+notification.app_id = appId
+notification.contents = {
+  en: message,
+}
+notification.included_segments = ["Subscribed Users"]
+```
+
+Then I can use the API client to submit my request to create the push notification.
+
+```ts
+const res = await client.createNotification(notification)
+```
+
+### How to Set Environment Variables
+
+#### On Local
+
+Supabase will respect local environment variables set in `supabase/.env.local`.
+
+Copy [.env.example](supabase/.env.example) and fill in with your keys from OneSignal app.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
 ╰─$ cp supabase/.env.example supabase/.env.local
 ```
 
-You can set environent variables in the production environment by using the Supabase CLI.
+#### On Supabase
+
+Use the Supabase CLI to set environent variables in the Supabase project.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
@@ -95,7 +129,9 @@ Finished supabase secrets set.
 
 [![asciicast](https://asciinema.org/a/HC1zFYiSHKskmTyD0yG0IVB68.svg)](https://asciinema.org/a/HC1zFYiSHKskmTyD0yG0IVB68)
 
-You can also remove variables in case you make a mistake.
+#### How to Remove Variable
+
+Use the Supabase CLI to remove environent variables in Supabase project.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
@@ -123,12 +159,12 @@ Result of running `supabase start`
 Seeding data supabase/seed.sql...
 Started supabase local development setup.
 
-         API URL: http://localhost:54321
-          DB URL: postgresql://postgres:postgres@localhost:54322/postgres
-      Studio URL: http://localhost:54323
-    Inbucket URL: http://localhost:54324
-      JWT secret: super-secret-jwt-token-with-at-least-32-characters-long
-        anon key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs
+API URL: http://localhost:54321
+DB URL: postgresql://postgres:postgres@localhost:54322/postgres
+Studio URL: http://localhost:54323
+Inbucket URL: http://localhost:54324
+JWT secret: super-secret-jwt-token-with-at-least-32-characters-long
+anon key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs
 service_role key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSJ9.vI9obAHOGyVVKa3pD--kJlyxp-Z2zV9UUMAhKpNLAcU
 ```
 
