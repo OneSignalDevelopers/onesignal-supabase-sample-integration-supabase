@@ -103,11 +103,11 @@ You can also remove variables in case you make a mistake.
 Finished supabase secrets unset.
 ```
 
-## Deploying
+## How to Deploy Function
 
 When developing Supabase Edge Functions we have the ability to deploy to a local or production environment. Running in the local environment allows you to easily test and quickly iterate on your implementation.
 
-### Local deployment
+### To Local
 
 To deploy this sample to a local Supabase instance:
 
@@ -136,7 +136,7 @@ Serving a function to the local instance of Supabase.
 
 [![asciicast](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV.svg)](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV)
 
-### Deploying to production
+### To Production
 
 Supabase makes deploying your project to production simple with their CLI.
 
@@ -149,12 +149,12 @@ If the command ☝️ doesn't work for you, try executing the command with the `
 
 [![asciicast](https://asciinema.org/a/nHeUle77fZcsoyXAMzwcB3329.svg)](https://asciinema.org/a/nHeUle77fZcsoyXAMzwcB3329)
 
-## How to Test Supabase Edge Function
+## How to the Test
 
-Send a HTTP request to the deployed function to test its implementation.
+Submit an HTTP request to the function.
 
 ```bash
-# Submitting HTTP request to function hosted locally.
+# HTTP request to local function
 curl -X "POST" "http://localhost:54321/functions/v1/push" \
      -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs' \
      -H 'Content-Type: application/json; charset=utf-8' \
@@ -165,17 +165,17 @@ curl -X "POST" "http://localhost:54321/functions/v1/push" \
 
 ![Local function response](assets/testing-local-function.gif)
 
-### Debugging deployed functions
+## How to Debug
 
- The [Supabase dashboard](https://app.supabase.com/) presents all deployed functions along with its time of deployment and status.
+The [Supabase dashboard](https://app.supabase.com/) presents all deployed functions along with its time of deployment and status.
 
 ![Functions deployed to production](assets/edge-functions.png)
 
-#### How to inspect the HTTP request sent to the edge function
+### How to Inspect the HTTP Request
 
 ![Inspecting function requests](assets/edge-function-invocations.gif)
 
-#### How to review the response from the edge function
+#### How to Review the Response
 
 ![Reviewing function logs](assets/edge-function-logs.gif)
 
