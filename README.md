@@ -62,7 +62,7 @@ Supabase Edge Functions are executed in the Deno enfironment on the edge which m
 
 Function logic is implemented in `push/index.ts`.
 
-Since I can't install packages using a traditional package manager, I'm using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the module.
+I can't use a traditional package manager to install packages, so I'm using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the `onesignal-node-api` module.
 
 ```ts
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
