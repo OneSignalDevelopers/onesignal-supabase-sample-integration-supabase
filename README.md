@@ -32,8 +32,7 @@ This project assumes that you already have a few things setup.
 ## How to Initialize the Supabase Project
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase projects create onesignal-supabase-edge-function-sample -i
+$ supabase projects create onesignal-supabase-edge-function-sample -i
 ```
 
 Entering this command should result in an interactive prompt to configure a new Supabase project, as shown below.
@@ -45,8 +44,7 @@ Entering this command should result in an interactive prompt to configure a new 
 Note that this sample already includes an implementation of an edge function. The following instructions are simply to explain how to add your own.
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase functions new push
+$ supabase functions new push
 ```
 
 The Supabase CLI's command to create a function will add the boilerplate for an edge function located in a directory with the name specified in the command, `push/index.ts`.
@@ -113,8 +111,7 @@ Supabase will respect local environment variables set in `supabase/.env.local`.
 Copy [.env.example](supabase/.env.example) and fill in your keys from OneSignal app.
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ cp supabase/.env.example supabase/.env.local
+$ cp supabase/.env.example supabase/.env.local
 ```
 
 #### On Supabase
@@ -122,8 +119,7 @@ Copy [.env.example](supabase/.env.example) and fill in your keys from OneSignal 
 Use the Supabase CLI to set environment variables in the Supabase project.
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase secrets set test=123
+$ supabase secrets set test=123
 Finished supabase secrets set.
 ```
 
@@ -134,8 +130,7 @@ Finished supabase secrets set.
 Use the Supabase CLI to remove environmental variables in the Supabase project.
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase secrets unset test
+$ supabase secrets unset test
 Finished supabase secrets unset.
 ```
 
@@ -152,8 +147,7 @@ When developing Supabase Edge Functions, we can deploy to a local or production 
 Result of running `supabase start`
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase start                                                                                                                                                1 ↵
+$ supabase start
 Seeding data supabase/seed.sql...
 Started supabase local development setup.
 
@@ -175,8 +169,7 @@ Serving a function to the local instance of Supabase.
 Supabase makes deploying your project to production simple with their CLI.
 
 ```bash
-╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
-╰─$ supabase functions deploy push
+$ supabase functions deploy push
 ```
 
 If the command ☝️ doesn't work for you, try executing the command with the `--legacy-bundle` flag set.
