@@ -16,7 +16,7 @@
 
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
-This project demonstrates sending push notifications using [Edge Functions](https://supabase.com/docs/guides/functions) hosted on Supabase. You can use the function implemented in this sample as a reference for using OneSignal in your Supabase deployment.
+This project demonstrates how to send a push notification from a [Supabase Edge Function](https://supabase.com/docs/guides/functions). Use this sample integration as a reference for your own edge function implementation.
 
 ## 🚦 Getting started
 
