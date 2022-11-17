@@ -16,11 +16,11 @@
 
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
-This project demonstrates sending push notifications using [Edge Functions](https://supabase.com/docs/guides/functions) hosted on Supabase. You can use function implemented in this sample as a reference for using OneSignal in your Supabase deployment.
+This project demonstrates sending push notifications using [Edge Functions](https://supabase.com/docs/guides/functions) hosted on Supabase. You can use the function implemented in this sample as a reference for using OneSignal in your Supabase deployment.
 
 ## 🚦 Getting started
 
-This project assumes that you already have a few things setup
+This project assumes that you already have a few things setup.
 
 - [OneSignal app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app) created.
 - [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) app integrated with a [OneSignal SDK](https://github.com/onesignal/sdks).
@@ -36,7 +36,7 @@ This project assumes that you already have a few things setup
 ╰─$ supabase projects create onesignal-supabase-edge-function-sample -i
 ```
 
-Entering this command should result in an interactive prompt to configure a new Supabase project as shown below.
+Entering this command should result in an interactive prompt to configure a new Supabase project, as shown below.
 
 [![asciicast](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY.svg)](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY)
 
@@ -62,7 +62,7 @@ Supabase Edge Functions are executed in the Deno enfironment on the edge which m
 
 Function logic is implemented in `push/index.ts`.
 
-Since packages can't be installed using a traditional package manager, I'm using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the module.
+Since I can't install packages using a traditional package manager, I'm using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the module.
 
 ```ts
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
@@ -76,7 +76,7 @@ const userAuthKey = Deno.env.get("USER_AUTH_KEY")!
 const restApiKey = Deno.env.get("REST_API_KEY")!
 ```
 
-I have to create a OneSignal API client before send a request to the API.
+I have to create a OneSignal API client before sending a request to the API.
 
 ```ts
 // Create OneSignal client
@@ -110,7 +110,7 @@ const res = await client.createNotification(notification)
 
 Supabase will respect local environment variables set in `supabase/.env.local`.
 
-Copy [.env.example](supabase/.env.example) and fill in with your keys from OneSignal app.
+Copy [.env.example](supabase/.env.example) and fill in your keys from OneSignal app.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
@@ -119,7 +119,7 @@ Copy [.env.example](supabase/.env.example) and fill in with your keys from OneSi
 
 #### On Supabase
 
-Use the Supabase CLI to set environent variables in the Supabase project.
+Use the Supabase CLI to set environment variables in the Supabase project.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
@@ -131,7 +131,7 @@ Finished supabase secrets set.
 
 #### How to Remove Variable
 
-Use the Supabase CLI to remove environent variables in Supabase project.
+Use the Supabase CLI to remove environmental variables in the Supabase project.
 
 ```bash
 ╭─iamwill@kronos ~/code/@onesignalDevelopers/onesignal-supabase-edge-function-sample ‹main●›
@@ -141,15 +141,13 @@ Finished supabase secrets unset.
 
 ## How to Deploy Function
 
-When developing Supabase Edge Functions we have the ability to deploy to a local or production environment. Running in the local environment allows you to easily test and quickly iterate on your implementation.
+When developing Supabase Edge Functions, we can deploy to a local or production environment. Local function development allows you to iterate quickly and efficiently to test the function.
 
-### To Local
+### Serve Locally
 
-To deploy this sample to a local Supabase instance:
-
-1. Start Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`.
+1. Start the Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`.
 2. To serve the function, run `supabase functions serve push --env-file ./supabase/.env.local --debug`
-3. Submit request to the endpoint making sure to use the **anon key** as your bearer token.
+3. Submit a request to the endpoint making sure to use the **anon key** as your bearer token.
 
 Result of running `supabase start`
 
@@ -203,7 +201,7 @@ curl -X "POST" "http://localhost:54321/functions/v1/push" \
 
 ## How to Debug
 
-The [Supabase dashboard](https://app.supabase.com/) presents all deployed functions along with its time of deployment and status.
+The [Supabase dashboard](https://app.supabase.com/) presents all deployed functions along with their time of deployment and status.
 
 ![Functions deployed to production](assets/edge-functions.png)
 
