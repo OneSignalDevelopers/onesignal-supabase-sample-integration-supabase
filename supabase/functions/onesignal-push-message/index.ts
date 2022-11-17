@@ -19,11 +19,11 @@ serve(async (req) => {
 
     // Build OneSignal notification object
     const notification = new OneSignal.Notification()
+    notification.app_id = appId
     notification.contents = {
       en: name,
     }
     notification.included_segments = ["Subscribed Users"]
-    notification.is_ios = false
 
     // Call OneSignal API to push notification
     const res = await client.createNotification(notification)
