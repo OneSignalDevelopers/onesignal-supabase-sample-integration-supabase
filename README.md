@@ -182,7 +182,7 @@ Submit an HTTP request to the function.
 
 ```bash
 # HTTP request to local function
-curl -X "POST" "http://localhost:54321/functions/v1/push" \
+curl -X "POST" "http://localhost:54321/functions/v1/send-message-to-all-subs" \
      -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs' \
      -H 'Content-Type: application/json; charset=utf-8' \
      -d $'{
