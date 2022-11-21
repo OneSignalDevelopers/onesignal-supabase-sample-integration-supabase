@@ -69,9 +69,9 @@ import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7
 I can load environment variables exposed in Deno's `Deno.env` object.
 
 ```ts
-const appId = Deno.env.get("APP_ID")!
-const userAuthKey = Deno.env.get("USER_AUTH_KEY")!
-const restApiKey = Deno.env.get("REST_API_KEY")!
+const appId = Deno.env.get("ONESIGNAL_ONESIGNAL_APP_ID")!
+const userAuthKey = Deno.env.get("ONESIGNAL_USER_AUTH_KEY")!
+const restApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY")!
 ```
 
 I have to create a OneSignal API client before sending a request to the API.
@@ -89,7 +89,7 @@ And a notification.
 
 ```ts
 const notification = new OneSignal.Notification()
-notification.app_id = appId
+notification.ONESIGNAL_ONESIGNAL_APP_ID = appId
 notification.contents = {
   en: message,
 }

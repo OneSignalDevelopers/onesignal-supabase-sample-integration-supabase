@@ -3,9 +3,9 @@ import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7
 
 serve(async (req) => {
   // Load secrets
-  const appId = Deno.env.get("APP_ID")!
+  const appId = Deno.env.get("ONESIGNAL_APP_ID")!
   const userAuthKey = Deno.env.get("USER_AUTH_KEY")!
-  const restApiKey = Deno.env.get("REST_API_KEY")!
+  const restApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY")!
 
   // Create OneSignal client
   const configuration = OneSignal.createConfiguration({
