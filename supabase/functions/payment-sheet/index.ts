@@ -1,12 +1,8 @@
 import { serve } from "https://deno.land/std@0.165.0/http/server.ts"
-import Stripe from "https://esm.sh/stripe@10.13.0?target=deno&deno-std=0.165.0"
 
 import { _StripePublishableKey_, _StripeSecretKey_ } from "../_utils/config.ts"
 import { createOrRetrieveCustomer } from "../_utils/supabase.ts"
-
-const stripe = Stripe(_StripeSecretKey_, {
-  httpClient: Stripe.createFetchHttpClient(),
-})
+import { stripe } from "../_utils/stripe.ts"
 
 console.log("payment-sheet handler up and running!")
 

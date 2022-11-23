@@ -6,5 +6,8 @@ export const _StripePublishableKey_ =
 
 export const _StripeSecretKey_ = Deno.env.get("STRIPE_SECRET_KEY") ?? ""
 
+export const _StripeEndpointSecret_ =
+  Deno.env.get("STRIPE_ENDPOINT_SECRET") ?? ""
+
 // For debugging environment
 // console.log("Runtime environmentDeno\n\t", Deno.env.toObject())

@@ -1,21 +1,13 @@
-import Stripe from "https://esm.sh/stripe@10.13.0?target=deno&deno-std=0.165.0"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0"
 
-import {
-  _SupabaseUrl_,
-  _SupabaseServiceRoleKey_,
-  _StripeSecretKey_,
-} from "./config.ts"
+import { _SupabaseUrl_, _SupabaseServiceRoleKey_ } from "./config.ts"
 import { Database } from "./db_types.ts"
+import { stripe } from "../_utils/stripe.ts"
 
 const supabaseAdmin = createClient<Database>(
   _SupabaseUrl_,
   _SupabaseServiceRoleKey_
 )
-
-const stripe = Stripe(_StripeSecretKey_, {
-  httpClient: Stripe.createFetchHttpClient(),
-})
 
 export const createOrRetrieveCustomer = async (authHeader: string) => {
   try {
