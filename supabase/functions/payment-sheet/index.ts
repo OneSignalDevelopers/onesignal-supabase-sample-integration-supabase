@@ -47,7 +47,7 @@ serve(async (req) => {
     }
     console.log(`Stripe response:\n\t`, res)
 
-    return new Response(JSON.stringify({}), {
+    return new Response(JSON.stringify(res), {
       headers: { "Content-Type": "application/json" },
       status: 200,
     })
