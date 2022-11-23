@@ -1,48 +1,74 @@
-import { Database } from "./db_types.ts"
-import { stripe } from "./stripe.ts"
+import Stripe from "https://esm.sh/stripe@10.13.0?target=deno&deno-std=0.165.0"
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0"
 
-// WARNING: The service role key has admin priviliges and should only be used in secure server environments!
-const url = Deno.env.get("SUPABASE_URL") ?? ""
-const serviceRolekey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? ""
-const supabaseAdmin = createClient<Database>(url, serviceRolekey)
+import {
+  _SupabaseUrl_,
+  _SupabaseServiceRoleKey_,
+  _StripeSecretKey_,
+} from "./config.ts"
+import { Database } from "./db_types.ts"
+
+const supabaseAdmin = createClient<Database>(
+  _SupabaseUrl_,
+  _SupabaseServiceRoleKey_
+)
+
+const stripe = Stripe(_StripeSecretKey_, {
+  httpClient: Stripe.createFetchHttpClient(),
+})
 
 export const createOrRetrieveCustomer = async (authHeader: string) => {
-  const jwt = authHeader.replace("Bearer ", "")
-  const {
-    data: { user },
-  } = await supabaseAdmin.auth.getUser(jwt)
-  if (!user) throw new Error("No user found for JWT!")
+  try {
+    const jwt = authHeader.replace("Bearer ", "")
+    const {
+      data: { user },
+    } = await supabaseAdmin.auth.getUser(jwt)
 
-  // Check if the user already has a Stripe customer ID in the Database.
-  const { data, error } = await supabaseAdmin
-    .from("customers")
-    .select("stripe_customer_id")
-    .eq("id", user?.id)
+    if (!user) {
+      throw new Error("No user found for JWT!")
+    }
 
-  console.log(data?.length, data, error)
-
-  if (error) throw error
-  if (data?.length === 1) {
-    // Exactly one customer found, return it.
-    const customer = data[0].stripe_customer_id
-    console.log(`Found customer id: ${customer}`)
-    return customer
-  }
-
-  if (data?.length === 0) {
-    // Create customer object in Stripe.
-    const customer = await stripe.customers.create({
-      email: user.email,
-      metadata: { uid: user.id },
-    })
-
-    console.log(`New customer "${customer.id}" created for user "${user.id}"`)
-
-    await supabaseAdmin
+    // Check if the user already has a Stripe customer ID in the Database.
+    const { data, error } = await supabaseAdmin
       .from("customers")
-      .insert({ id: user.id, stripe_customer_id: customer.id })
-      .throwOnError()
-    return customer.id
-  } else throw new Error(`Unexpected count of customer rows: ${data?.length}`)
+      .select("stripe_customer_id")
+      .eq("id", user?.id)
+    if (error) {
+      console.error(
+        "Failed checking for Stripe customer existence in Supabase ",
+        { data, error }
+      )
+      throw error
+    }
+
+    if (data?.length === 1) {
+      // Exactly one customer found, return it.
+      const customer = data[0].stripe_customer_id
+      console.log(`Found customer id: ${customer}`)
+      return customer
+    }
+
+    if (data?.length === 0) {
+      // Create customer object in Stripe.
+      const customer = await stripe.customers.create({
+        email: user.email,
+        metadata: { uid: user.id },
+      })
+
+      console.log(`New customer "${user.id}" created for user "${user.id}"`)
+
+      await supabaseAdmin
+        .from("customers")
+        .insert({ id: user.id, stripe_customer_id: customer.id })
+        .throwOnError()
+
+      return customer.id
+    }
+
+    throw new Error(
+      `Unexpected number of customer rows: ${data?.length}. Expected 0 or 1.`
+    )
+  } catch (e) {
+    console.error("Error `createOrRetrieveCustomer`: ", { error: e })
+  }
 }
