@@ -1,8 +1,7 @@
 import { serve } from "https://deno.land/std@0.165.0/http/server.ts"
 
-import { _StripePublishableKey_, _StripeSecretKey_ } from "../_utils/config.ts"
+import { _StripePublishableKey_, stripe } from "../_utils/config.ts"
 import { createOrRetrieveCustomer } from "../_utils/supabase.ts"
-import { stripe } from "../_utils/stripe.ts"
 
 console.log("payment-sheet handler up and running!")
 
