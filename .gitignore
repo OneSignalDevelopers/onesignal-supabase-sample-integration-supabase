@@ -1,5 +1,11 @@
+# Supabase
+.branches
+.temp
+
+# Project specific
 .DS_Store
-supabase/.env.local
+.env*
 *.paw
 .vscode/settings.json
+
 
