@@ -1,3 +1,5 @@
 .DS_Store
 supabase/.env.local
 *.paw
+.vscode/settings.json
+
