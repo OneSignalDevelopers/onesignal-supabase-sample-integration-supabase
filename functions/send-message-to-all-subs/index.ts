@@ -33,14 +33,9 @@ serve(async (req) => {
       headers: { "Content-Type": "application/json" },
     })
   } catch (err) {
-    return new Response(
-      JSON.stringify({
-        err,
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-        status: 400,
-      }
-    )
+    return new Response(JSON.stringify(err), {
+      headers: { "Content-Type": "application/json" },
+      status: 400,
+    })
   }
 })
