@@ -15,21 +15,23 @@ serve(async (req) => {
   const client = new OneSignal.DefaultApi(configuration)
 
   try {
-    const { message } = await req.json()
+    const data = await req.json()
+
+    console.info("Request data", { data })
 
     // Build OneSignal notification object
     const notification = new OneSignal.Notification()
     notification.app_id = appId
-    notification.contents = {
-      en: message,
-    }
-    notification.included_segments = ["Subscribed Users"]
+    // notification.contents = {
+    //   en: message,
+    // }
+    // notification.included_segments = ["Subscribed Users"]
 
-    // Call OneSignal API to push notification
-    const res = await client.createNotification(notification)
-    console.log("OneSignal response -", res)
+    // // Call OneSignal API to push notification
+    // const res = await client.createNotification(notification)
+    // console.log("OneSignal response -", res)
 
-    return new Response(JSON.stringify(res), {
+    return new Response(JSON.stringify(data), {
       headers: { "Content-Type": "application/json" },
     })
   } catch (err) {
