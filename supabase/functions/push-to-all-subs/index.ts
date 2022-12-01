@@ -1,33 +1,27 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
+import {
+  onesignal,
+  _OnesignalAppId_,
+  _OnesignalUserAuthKey_,
+} from "../_utils/config.ts"
 
 serve(async (req) => {
-  // Load secrets
-  const appId = Deno.env.get("ONESIGNAL_APP_ID")!
-  const userAuthKey = Deno.env.get("USER_AUTH_KEY")!
-  const restApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY")!
-
   // Create OneSignal client
-  const configuration = OneSignal.createConfiguration({
-    userKey: userAuthKey,
-    appKey: restApiKey,
-  })
-  const client = new OneSignal.DefaultApi(configuration)
 
   try {
-    const data = await req.json()
-    const { message } = data
+    const { message } = await req.json()
 
     // Build OneSignal notification object
     const notification = new OneSignal.Notification()
-    notification.app_id = appId
+    notification.app_id = _OnesignalAppId_
     notification.contents = {
       en: message,
     }
     notification.included_segments = ["Subscribed Users"]
 
     // // Call OneSignal API to push notification
-    const res = await client.createNotification(notification)
+    const res = await onesignal.createNotification(notification)
     console.log("OneSignal response", res)
 
     return new Response(JSON.stringify(data), {
