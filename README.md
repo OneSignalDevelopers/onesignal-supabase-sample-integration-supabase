@@ -29,44 +29,54 @@ This project assumes that you already have a few things setup.
 
 ---
 
-## How to Initialize the Supabase Project
+## How to Setup Supabase
 
-```bash
-$ supabase projects create onesignal-supabase-edge-function-sample -i
+### Initialize Supabase project
+
+Run this command to interactively configure a new Supabase project
+
+```sh
+supabase projects create onesignal-supabase-sample-integration -i
 ```
-
-Entering this command should result in an interactive prompt to configure a new Supabase project, as shown below.
 
 [![asciicast](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY.svg)](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY)
 
-## How to Create the Function
+### Disable email confirmation authentication
 
-Note that this sample already includes an implementation of an edge function. The following instructions are simply to explain how to add your own.
+Supabase projects are more secure by default. The front-end client consuming this project does not support magic links. Disabling email confirmation is needed to run the [companion sample app](https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-app/blob/main/README.md).
 
-```bash
-$ supabase functions new push
-```
+1. From the Supabase Dashboard, navigate to your project's Authenication pane. ![Select Providers on Authentication page](assets/disable-email-confirmation/01-select-providers.png)
+2. Select **Providers** under the Configuration header. ![Disable Confirm email](/assets/disable-email-confirmation/02-disable-confirm-email.png)
+3. Disable _Confirm email_ and select **Save**.
+
+### Create Supabase Edge Function
 
 The Supabase CLI's command to create a function will add the boilerplate for an edge function located in a directory with the name specified in the command, `push/index.ts`.
 
+```bash
+supabase functions new push-order-confirmation-to-customer
+```
+
 [![asciicast](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv.svg)](https://asciinema.org/a/K0YebFw4ciC5uH5OJUn3oATqv)
 
-## Function Implementation
+This function is responsible for calling the OneSignal API using [onesignal-node-sdk](https://www.npmjs.com/package/%40onesignal%2Fnode-onesignal).
 
-Supabase Edge Functions are executed in the Deno enfironment on the edge which means:
+#### Function Implementation
+
+Supabase Edge Functions are executed in the Deno enfironment on the edge, so
 
 - Functions are written in TypeScript
 - You can't install packages with a package manager like npm or Yarn
 
-Function logic is implemented in `push/index.ts`.
+Function logic is implemented in `push/index.ts` ([Here](https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/blob/56ba86b8ac7c411d0d81f24f552c89090ea77f7f/supabase/functions/push-order-confirmation-to-customer/index.ts#L26-L39)).
 
-I can't use a traditional package manager to install packages, so I'm using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the `onesignal-node-api` module.
+We can't use a traditional package manager to install packages, so we're using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the [onesignal-node-api](https://www.npmjs.com/package/%40onesignal%2Fnode-onesignal) module.
 
 ```ts
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
 ```
 
-I can load environment variables exposed in Deno's `Deno.env` object.
+Deno's `Deno.env` object exposes the values we need.
 
 ```ts
 const appId = Deno.env.get("ONESIGNAL_ONESIGNAL_APP_ID")!
@@ -74,7 +84,7 @@ const userAuthKey = Deno.env.get("ONESIGNAL_USER_AUTH_KEY")!
 const restApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY")!
 ```
 
-I have to create a OneSignal API client before sending a request to the API.
+Create the OneSignal API client so we can send a request to the API.
 
 ```ts
 // Create OneSignal client
@@ -85,26 +95,28 @@ const configuration = OneSignal.createConfiguration({
 const client = new OneSignal.DefaultApi(configuration)
 ```
 
-And a notification.
+Now we can configure the notification object.
 
 ```ts
 const notification = new OneSignal.Notification()
-notification.ONESIGNAL_ONESIGNAL_APP_ID = appId
+notification.app_id = _OnesignalAppId_
+notification.include_external_user_ids = [profile]
 notification.contents = {
   en: message,
 }
-notification.included_segments = ["Subscribed Users"]
+notification.contents = { en: notifMessage(record.amount, record.currency) }
 ```
 
-Then I can use the API client to submit my request to create the push notification.
+And send the notification to OneSignal to send the push notification.
 
 ```ts
-const res = await client.createNotification(notification)
+const onesignalApiRes = await onesignalClient.createNotification(    notification
+)
 ```
 
-### How to Set Environment Variables
+### Set Environment Variables
 
-#### On Local
+#### Locally
 
 Supabase will respect local environment variables set in `supabase/.env.local`.
 
