@@ -147,7 +147,15 @@ Finished supabase secrets unset.
 
 ### Run Migrations
 
-Todo write stuff
+💡You only need to run steps 1 since this sample includes migrations files ([here](https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/tree/main/supabase/migrations)).
+
+1. Run `supabase db diff` and copy its output
+  [![Generate SQL script for Supabase migration](https://asciinema.org/a/541875.svg)](https://asciinema.org/a/541875)
+
+2. Create a new migration and paste the output from the previous step into the `.sql` file
+  [![Create Supabase Migration](https://asciinema.org/a/541879.svg)](https://asciinema.org/a/541879)
+
+3. Run `supabase db push` to apply migrations to the hosted project
 
 ### Deploy Edge Function
 
@@ -155,7 +163,7 @@ We can deploy edge functions to a local or production environment. Developing lo
 
 #### Hosting locally
 
-1. Start the Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`.
+1. Start the Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`
 2. To serve the function, run `supabase functions serve push --env-file ./supabase/.env.local --debug`
 3. Submit a request to the endpoint making sure to use the **anon key** as your bearer token.
 
