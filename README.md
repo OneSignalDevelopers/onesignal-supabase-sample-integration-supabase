@@ -49,7 +49,7 @@ Supabase projects are more secure by default. The front-end client consuming thi
 2. Select **Providers** under the Configuration header. ![Disable Confirm email](/assets/disable-email-confirmation/02-disable-confirm-email.png)
 3. Disable _Confirm email_ and select **Save**.
 
-### Create Supabase Edge Function
+### Create Edge Function
 
 The Supabase CLI's command to create a function will add the boilerplate for an edge function located in a directory with the name specified in the command, `push/index.ts`.
 
@@ -79,20 +79,20 @@ import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7
 Deno's `Deno.env` object exposes the values we need.
 
 ```ts
-const appId = Deno.env.get("ONESIGNAL_ONESIGNAL_APP_ID")!
-const userAuthKey = Deno.env.get("ONESIGNAL_USER_AUTH_KEY")!
-const restApiKey = Deno.env.get("ONESIGNAL_REST_API_KEY")!
+export const _OnesignalAppId_ = Deno.env.get("ONESIGNAL_APP_ID")!
+const _OnesignalUserAuthKey_ = Deno.env.get("USER_AUTH_KEY")!
+export const _OnesignalRestApiKey_ = Deno.env.get("ONESIGNAL_REST_API_KEY")!
+const configuration = OneSignal.createConfiguration({
+  userKey: _OnesignalUserAuthKey_,
+  appKey: _OnesignalAppId_,
+})
 ```
 
 Create the OneSignal API client so we can send a request to the API.
 
 ```ts
 // Create OneSignal client
-const configuration = OneSignal.createConfiguration({
-  userKey: userAuthKey,
-  appKey: restApiKey,
-})
-const client = new OneSignal.DefaultApi(configuration)
+export const onesignal = new OneSignal.DefaultApi(configuration)
 ```
 
 Now we can configure the notification object.
@@ -102,16 +102,15 @@ const notification = new OneSignal.Notification()
 notification.app_id = _OnesignalAppId_
 notification.include_external_user_ids = [profile]
 notification.contents = {
-  en: message,
+  en: generateMessage(record.amount, record.currency),
 }
-notification.contents = { en: notifMessage(record.amount, record.currency) }
 ```
 
 And send the notification to OneSignal to send the push notification.
 
 ```ts
-const onesignalApiRes = await onesignalClient.createNotification(    notification
-)
+const onesignalApiRes =
+  await onesignalClient.createNotification(notification)
 ```
 
 ### Set Environment Variables
@@ -146,11 +145,15 @@ $ supabase secrets unset test
 Finished supabase secrets unset.
 ```
 
-## How to Deploy Function
+### Run Migrations
 
-When developing Supabase Edge Functions, we can deploy to a local or production environment. Local function development allows you to iterate quickly and efficiently to test the function.
+Todo write stuff
 
-### Serve Locally
+### Deploy Edge Function
+
+We can deploy edge functions to a local or production environment. Developing locally allows us to test and iterate quickly.
+
+#### Hosting locally
 
 1. Start the Supabase Docker container, navigate to the root directory of this sample project and run `supabase start`.
 2. To serve the function, run `supabase functions serve push --env-file ./supabase/.env.local --debug`
@@ -176,12 +179,12 @@ Serving a function to the local instance of Supabase.
 
 [![asciicast](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV.svg)](https://asciinema.org/a/xfO8bL75esZJjVDqnbzmgfUEV)
 
-### To Production
+#### To Production
 
 Supabase makes deploying your project to production simple with their CLI.
 
 ```bash
-$ supabase functions deploy push
+supabase functions deploy push
 ```
 
 If the command ☝️ doesn't work for you, try executing the command with the `--legacy-bundle` flag set.
