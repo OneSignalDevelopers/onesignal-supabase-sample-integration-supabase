@@ -29,7 +29,41 @@ This project assumes that you already have a few things setup.
 
 ---
 
-## How to Setup Supabase
+## Setup OneSignal App
+
+### Setup iOS Platform
+
+### Setup Android Platform
+
+### Craft an In-App Message
+
+Consent is required before we can present push notifications to a user. It's recommend to use an in-app message to ask for consent because no prior consent is needed to present them. This is particularly useful in situations where a user accidentally declines consent. We have an in-depth guide explaining this strategy [here](https://documentation.onesignal.com/docs/how-to-prompt-for-push-permissions-with-an-in-app-message).
+
+1. Select **New Message -> New In-App** and name it "prompt_notification" ![Select new in app message](assets/create-in-app-message/01-select-new-in-app-message.png)
+
+2. Configure an in-app message with at least one button; here's the message with two buttons I configured for this sample using our Block Editor! ![Example in-app message](assets/create-in-app-message/02-configure-in-app-message-1.png)
+
+3. Add the _Push Permission Prompt_ **Click Action** to the primary call to action button. ![Adding a cliock action](assets/create-in-app-message/03-add-click-action.png)
+
+4. Select **Add Trigger -> In-App Trigger** to present the in-app message when specific conditions are met ![Adding in-app trigger](assets/create-in-app-message/04-add-trigger.png)
+
+5. Schedule the message to start showing **Immediately**, to **Show forever**, and to show **Every time trigger conditions are satisfied**
+
+6. Select **Make Message Live** to publish message
+
+If you didn't name your in-app message "prompt_notification", you'll need to update the Flutter app's code to use your name.
+
+#### Triggering in-app messages in the app
+
+```dart
+final deviceState = await OneSignal.shared.getDeviceState();
+final subscribed = deviceState?.subscribed;
+if (subscribed == false) {
+  OneSignal.shared.addTrigger("prompt_notification", "true");
+}
+```
+
+## Setup Supabase Project
 
 ### Initialize Supabase project
 
