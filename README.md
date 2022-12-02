@@ -329,5 +329,3 @@ Get in touch with us or learn more about OneSignal through the channels below.
 ## Show your support
 
 Give a ⭐️ if this project helped you, and watch this repo to stay up to date.
-
----
