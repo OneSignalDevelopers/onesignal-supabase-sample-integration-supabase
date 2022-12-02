@@ -270,7 +270,7 @@ For complete instructions on creating a webhooks, please refer to the [Supabase 
 
 💡We need to include the Authorization header so the edge function can verify the request. Without this header, anyone would be able to call our endpoint.
 
-## 🚀 Launch Companion App
+## 🚀🚀 Launch Companion App
 
 The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) can be built from source to run alongside this Supabase project.
 
