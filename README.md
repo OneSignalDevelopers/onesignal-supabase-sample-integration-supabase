@@ -16,24 +16,49 @@
 
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
-This project demonstrates how to send a push notification from a [Supabase Edge Function](https://supabase.com/docs/guides/functions). Use this sample integration as a reference for your own edge function implementation.
+![App demo](/assets/aux/push-notification-demo.gif)
+
+This project demonstrates how to use OneSignal as an integration with [Supabase](https://supabase.com) to handle your messaging needs, including push notifications, SMS text messages, email, and in-app messaging. Feel free to use this sample as a reference for your own Supabase integration.
+
+###### Current OneSignal channels Implemented
+
+- [x] Mobile Push Notifications
+- [ ] Web Push Notifications (planned)
+- [ ] SMS Text Messages (planned)
+- [ ] Email (planed)
+- [x] In-app Messages
+
+---
 
 ## 🚦 Getting started
 
 This project assumes that you already have a few things setup.
 
-- [OneSignal app](https://documentation.onesignal.com/docs/apps-organizations#create-an-app) created.
-- [Android](https://documentation.onesignal.com/docs/android-sdk-setup) or [iOS](https://documentation.onesignal.com/docs/ios-sdk-setup) app integrated with a [OneSignal SDK](https://github.com/onesignal/sdks).
-- [Supabase CLI](https://supabase.com/docs/guides/cli#installation) [v1.14.0](https://www.npmjs.com/package/supabase/v/1.14.0) installed.
+- An existing OneSignal account. If not, [create one for free](https://dashboard.onesignal.com/signup).
+- A Supabase account and the [Supabase CLI](https://supabase.com/docs/guides/cli#installation) [v1.16.0](https://www.npmjs.com/package/supabase/v/1.16.0) installed.
+- A Firebase account, if not [create one first](https://firebase.google.com/).
+- A Stripe account and the [Stripe CLI](https://stripe.com/docs/stripe-cli) v1.13.5 installed.
+- A Vercel account and the [Vercel CLI](https://vercel.com/docs/cli#) [v28.7.0](https://www.npmjs.com/package/vercel/v/28.7.0) installed (or anything capable of hosting a Next.js API).
+- A working Flutter dev environment and access to a mac for iOS-specific steps.
 - [Deno](https://github.com/denoland/deno_install) v1.28.0 installed.
-
----
 
 ## Setup OneSignal App
 
+1. From the OneSignal Dashboard, select **New App/Website** to create an app.
+![Select New App/Website to create new app](assets/configure-android/01-create-new-app.png)
+2. Name app and choose the **Android** platform to setup. ![Onesignal platform configuration](assets/configure-android/02-configure-android.png)
+3. Enter FCM credentials for the Firebase project you want to handle Android notifications and choose **Save & Continue**. ![FCM configuration form](assets/configure-android/03-save-fcm-details.png)
+
 ### Setup iOS Platform
 
-### Setup Android Platform
+iOS configuration requires substantially more effort to integrate due to needing signed certs from Apple. Due to this fact, follow [this guide](https://github.com/OneSignalDevelopers/OneSignal-Flutter-Sample/blob/main/docs/obtaining-ios-push-cert.md) for detailed instructions on creating the certificate needed to use Apple's Push Notification Service ([APNs](https://developer.apple.com/documentation/usernotifications/registering_your_app_with_apns)).
+
+After you have the certificate, head to the OneSignal Dashboard
+
+1. Choose **Settings -> Platforms**
+2. **Activate** the iOS card
+![Platform settings](assets/configure-ios/01-activate-apple-platform.png)
+3. Upload your certificate and enter the password you used to encrypt it. If you didn't set a password, leave the password input blank. ![Apple iOS (APNs) Configuration form](assets/configure-ios/02-apns-configuration.png)
 
 ### Craft an In-App Message
 
