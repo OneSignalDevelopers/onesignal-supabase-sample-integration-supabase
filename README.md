@@ -201,11 +201,11 @@ If the command ☝️ doesn't work for you, try executing the command with the `
 
 ### Create Database Webhook
 
-For detailed instructions on creating a webhooks, please refer to the [Supabase docs](/assets/webhook-setup/02-select-create-a-new-webhook.png).
+For complete instructions on creating a webhooks, please refer to the [Supabase docs](/assets/webhook-setup/02-select-create-a-new-webhook.png).
 
-![Database Webhooks page](/assets/webhook-setup/02-select-create-a-new-webhook.png)
+![Sample hook](/assets/webhook-setup/03-select-confirm.png)
 
-1. Select **Create a new hook** button
+1. From the Database -> Webhooks page Select **Create a new hook** button
 2. Name the hook "push-order-confirmation-to-user"
 3. Set the table to `orders`
 4. Select **Insert** checkbox
@@ -213,7 +213,9 @@ For detailed instructions on creating a webhooks, please refer to the [Supabase 
 6. Set the HTTP request method to **POST**
 7. Set the URL to the edge function, `push-order-confirmation-to-customer`
 8. Add a HTTP Header named `Authorization` and set the value to `Bearer [Your Supabase project's anonKey]`
-9. Select **Confirm** confirm button to complete setup ![Review before confirm](/assets/webhook-setup/03-select-confirm.png)
+9. Select **Confirm** confirm button to complete setup
+
+💡We need to include the Authorization header so the edge function can verify the request. Without this header, anyone would be able to call our endpoint.
 
 ## How to the Test
 
