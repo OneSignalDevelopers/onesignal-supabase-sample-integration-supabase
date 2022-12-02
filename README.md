@@ -12,13 +12,13 @@
   <hr />
 </div>
 
-# OneSignal Supabase Edge Function Integration Sample
-
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
-![App demo](/assets/aux/push-notification-demo.gif)
+# OneSignal Supabase Edge Function Integration Sample
 
 This project demonstrates how to use OneSignal as an integration with [Supabase](https://supabase.com) to handle your messaging needs, including push notifications, SMS text messages, email, and in-app messaging. Feel free to use this sample as a reference for your own Supabase integration.
+
+![App demo](/assets/aux/push-notification-demo.gif)
 
 ###### Current OneSignal channels Implemented
 
@@ -275,6 +275,10 @@ For complete instructions on creating a webhooks, please refer to the [Supabase 
 9. Select **Confirm** confirm button to complete setup
 
 💡We need to include the Authorization header so the edge function can verify the request. Without this header, anyone would be able to call our endpoint.
+
+## 🚀 Launch Companion App
+
+The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) can be built from source to run alongside this Supabase project.
 
 ## How to the Test
 
