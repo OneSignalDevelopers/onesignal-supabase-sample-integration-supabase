@@ -304,6 +304,16 @@ The [Supabase dashboard](https://app.supabase.com/) presents all deployed functi
 
 ![Reviewing function logs](assets/edge-function-logs.gif)
 
+---
+
+###### Current OneSignal channels Implemented
+
+- [x] Mobile Push Notifications
+- [ ] Web Push Notifications (planned)
+- [ ] SMS Text Messages (planned)
+- [ ] Email (planed)
+- [x] In-app Messages
+
 # ❤️ Developer Community
 
 For additional resources, please join the [OneSignal Developer Community](https://onesignal.com/onesignal-developers).
@@ -321,10 +331,3 @@ Get in touch with us or learn more about OneSignal through the channels below.
 Give a ⭐️ if this project helped you, and watch this repo to stay up to date.
 
 ---
-###### Current OneSignal channels Implemented
-
-- [x] Mobile Push Notifications
-- [ ] Web Push Notifications (planned)
-- [ ] SMS Text Messages (planned)
-- [ ] Email (planed)
-- [x] In-app Messages
