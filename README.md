@@ -20,14 +20,6 @@ This project demonstrates how to use OneSignal as an integration with [Supabase]
 
 ![App demo](/assets/aux/push-notification-demo.gif)
 
-###### Current OneSignal channels Implemented
-
-- [x] Mobile Push Notifications
-- [ ] Web Push Notifications (planned)
-- [ ] SMS Text Messages (planned)
-- [ ] Email (planed)
-- [x] In-app Messages
-
 ---
 
 ## 🚦 Getting started
@@ -101,6 +93,8 @@ supabase projects create onesignal-supabase-sample-integration -i
 [![asciicast](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY.svg)](https://asciinema.org/a/NxhyWy8OKco1O91H5oHFqzykY)
 
 ### Disable email confirmation authentication
+
+![Disable Supabase email confirmation](/assets/aux/disabling-email-confirmation.gif)
 
 Supabase projects are more secure by default. The front-end client consuming this project does not support magic links. Disabling email confirmation is needed to run the [companion sample app](https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-app/blob/main/README.md).
 
@@ -325,3 +319,12 @@ Get in touch with us or learn more about OneSignal through the channels below.
 ## Show your support
 
 Give a ⭐️ if this project helped you, and watch this repo to stay up to date.
+
+---
+###### Current OneSignal channels Implemented
+
+- [x] Mobile Push Notifications
+- [ ] Web Push Notifications (planned)
+- [ ] SMS Text Messages (planned)
+- [ ] Email (planed)
+- [x] In-app Messages
