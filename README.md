@@ -12,11 +12,13 @@
   <hr />
 </div>
 
+
 # OneSignal + Supabase Sample Omni-channel Integration
+
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
 This project demonstrates how to use OneSignal as an integration with [Supabase](https://supabase.com) to handle your messaging needs, including push notifications, SMS text messages, email, and in-app messaging. Feel free to use this sample as a reference for your own Supabase integration.
-
+  
 ## 🚦 Getting started
 
 This project assumes that you already have a few things setup.
