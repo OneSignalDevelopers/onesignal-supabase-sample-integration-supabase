@@ -18,8 +18,6 @@ OneSignal makes engaging customers simple and is the fastest, most reliable serv
 
 This project demonstrates how to use OneSignal as an integration with [Supabase](https://supabase.com) to handle your messaging needs, including push notifications, SMS text messages, email, and in-app messaging. Feel free to use this sample as a reference for your own Supabase integration.
 
-![App demo](/assets/aux/push-notification-demo.gif)
-
 ---
 
 ## 🚦 Getting started
@@ -236,9 +234,11 @@ For complete instructions on creating a webhooks, please refer to the [Supabase 
 
 💡We need to include the Authorization header so the edge function can verify the request. Without this header, anyone would be able to call our endpoint.
 
-## 🚀🚀 Launch Companion App
+## 🚀🚀🚀 Launch Companion App
 
 The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) can be built from source to run alongside this Supabase project.
+
+![App demo](/assets/aux/push-notification-demo.gif)
 
 ### Debugging
 
