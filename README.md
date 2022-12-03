@@ -125,46 +125,22 @@ Function logic is implemented in `push/index.ts` ([Here](https://github.com/OneS
 
 We can't use a traditional package manager to install packages, so we're using [esm.sh](https://esm.sh) – a global CDN for npm packages – to load the [onesignal-node-api](https://www.npmjs.com/package/%40onesignal%2Fnode-onesignal) module.
 
-```ts
-import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
-```
+https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/blob/12df6f502b73050cad18ea04712a3b8362b47853/supabase/functions/_utils/config.ts#L2
 
 Deno's `Deno.env` object exposes the values we need.
 
-```ts
-export const _OnesignalAppId_ = Deno.env.get("ONESIGNAL_APP_ID")!
-const _OnesignalUserAuthKey_ = Deno.env.get("USER_AUTH_KEY")!
-export const _OnesignalRestApiKey_ = Deno.env.get("ONESIGNAL_REST_API_KEY")!
-const configuration = OneSignal.createConfiguration({
-  userKey: _OnesignalUserAuthKey_,
-  appKey: _OnesignalAppId_,
-})
-```
+https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/blob/12df6f502b73050cad18ea04712a3b8362b47853/supabase/functions/_utils/config.ts#L5-L7
 
 Create the OneSignal API client so we can send a request to the API.
 
-```ts
-// Create OneSignal client
-export const onesignal = new OneSignal.DefaultApi(configuration)
-```
+https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/blob/12df6f502b73050cad18ea04712a3b8362b47853/supabase/functions/_utils/config.ts#L12
 
 Now we can configure the notification object.
-
-```ts
-const notification = new OneSignal.Notification()
-notification.app_id = _OnesignalAppId_
-notification.include_external_user_ids = [profile]
-notification.contents = {
-  en: generateMessage(record.amount, record.currency),
-}
-```
+https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/blob/12df6f502b73050cad18ea04712a3b8362b47853/supabase/functions/push-order-confirmation-to-customer/index.ts#L24-L29
 
 And send the notification to OneSignal to send the push notification.
 
-```ts
-const onesignalApiRes =
-  await onesignalClient.createNotification(notification)
-```
+https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-supabase/blob/12df6f502b73050cad18ea04712a3b8362b47853/supabase/functions/push-order-confirmation-to-customer/index.ts#L30
 
 ### Set Environment Variables
 
