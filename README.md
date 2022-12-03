@@ -68,17 +68,7 @@ Consent is required before we can present push notifications to a user. It's rec
 
 6. Select **Make Message Live** to publish message
 
-If you didn't name your in-app message "prompt_notification", you'll need to update the Flutter app's code to use your name.
-
-#### Triggering in-app messages in the app
-
-```dart
-final deviceState = await OneSignal.shared.getDeviceState();
-final subscribed = deviceState?.subscribed;
-if (subscribed == false) {
-  OneSignal.shared.addTrigger("prompt_notification", "true");
-}
-```
+If you didn't name your in-app message "prompt_notification", you'll need to update the [Flutter app's code](https://github.com/OneSignalDevelopers/onesignal-supabase-sample-integration-app/blob/main/README.md#triggering-an-in-app-message) to use your name.
 
 ## Setup Supabase Project
 
