@@ -240,33 +240,21 @@ For complete instructions on creating a webhooks, please refer to the [Supabase 
 
 The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) can be built from source to run alongside this Supabase project.
 
-## How to the Test
-
-Submit an HTTP request to the function.
-
-```bash
-# HTTP request to local function
-curl -X "POST" "http://localhost:54321/functions/v1/send-message-to-all-subs" \
-     -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24ifQ.625_WdcF3KHqz5amU0x2X5WWHP-OEs_4qj0ssLNHzTs' \
-     -H 'Content-Type: application/json; charset=utf-8' \
-     -d $'{
-  "message": "Local function test"
-}'
-```
-
-![Local function response](assets/testing-local-function.gif)
-
-## How to Debug
+### Debugging
 
 The [Supabase dashboard](https://app.supabase.com/) presents all deployed functions along with their time of deployment and status.
 
 ![Functions deployed to production](assets/edge-functions.png)
 
-### How to Inspect the HTTP Request
+#### Inspect Supabase Edge Function Requests
+
+Supabase enables you to review HTTP request logs to assist with our debugging.
 
 ![Inspecting function requests](assets/edge-function-invocations.gif)
 
-#### How to Review the Response
+#### Review Server Logs
+
+Our `console.logs` will appear here!
 
 ![Reviewing function logs](assets/edge-function-logs.gif)
 
