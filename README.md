@@ -233,6 +233,24 @@ For complete instructions on creating a webhooks, please refer to the [Supabase 
 
 💡We need to include the Authorization header so the edge function can verify the request. Without this header, anyone would be able to call our endpoint.
 
+###### Example Database Webhook event
+```json
+{
+    type: "INSERT",
+    table: "orders",
+    record: {
+      id: "796a354b-c087-4afe-8614-5a1015221d04",
+      amount: 1099,
+      currency: "usd",
+      created_at: "2022-11-30T18:41:42.605",
+      stripe_pi_id: "pi_3M9vDvKCO1JeQB0L1PGzangD",
+      stripe_customer_id: "cus_MtibdpF533vFYn"
+    },
+    schema: "public",
+    old_record: null
+}
+```
+
 ## 🚀🚀🚀 Launch Companion App
 
 The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) can be built from source to run alongside this Supabase project.
