@@ -302,7 +302,7 @@ Our `console.logs` will appear here!
 - [x] Mobile Push Notifications
 - [ ] Web Push Notifications (planned)
 - [ ] SMS Text Messages (planned)
-- [ ] Email (planed)
+- [x] Email
 - [x] In-app Messages
 
 # ❤️ Developer Community
