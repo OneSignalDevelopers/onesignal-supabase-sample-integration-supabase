@@ -18,7 +18,7 @@
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
 This project demonstrates how to use OneSignal as an integration with [Supabase](https://supabase.com) to handle your messaging needs, including push notifications, SMS text messages, email, and in-app messaging. Feel free to use this sample as a reference for your own Supabase integration.
-  
+
 ## 🚦 Getting started
 
 This project assumes that you already have a few things setup.
@@ -88,6 +88,26 @@ Supabase projects are more secure by default. The front-end client consuming thi
 1. From the Supabase Dashboard, navigate to your project's Authenication pane. ![Select Providers on Authentication page](assets/disable-email-confirmation/01-select-providers.png)
 2. Select **Providers** under the Configuration header. ![Disable Confirm email](/assets/disable-email-confirmation/02-disable-confirm-email.png)
 3. Disable _Confirm email_ and select **Save**.
+
+### Edit Database Triggers
+
+We can rely on Supabase to automatically insert a user profile after user signup. Supabase provides Database Functions and Triggers that enable us to react to events on the database. For this sample integration, we will edit the existing function `on_auth_user_created`.
+
+1. Navigate to Database -> Triggers
+![on_auth_user_created Trigger](assets/configure-database-triggers/01-nav-to-triggers.png)
+
+2. Edit the backing function by navigating to Functions and clicking the edit button located in the context-menu for the record `handle_new_user`. ![Navigate to Supabase Database Functions](assets/configure-database-triggers/02-edit-database-function.png)
+
+3. Paste the 👇 script as the **Defintion** and select **Confirm**
+```sql
+begin
+  insert into public.profiles (id, email)
+  values (new.id, new.raw_user_meta_data->>'email');
+  return new;
+end;
+```
+
+![Database function edit form](assets/configure-database-triggers/03-update-function-definition.png)
 
 ### Create Edge Function
 
