@@ -6,21 +6,23 @@ import { getCustomerProfile } from "../_utils/supabase.ts"
 const generateEmail = (amount: number, currency: string) =>
   `<html><body>You just spent ${amount / 100} ${(
     currency as String
-  ).toUpperCase()}.</body></html>`
+  ).toUpperCase()}. <a href="#">Unsubscribe</a></body></html>`
 
 serve(async (req) => {
   try {
     const { record } = await req.json()
     const customerId = record.stripe_customer_id
-    const profile: string | null = await getCustomerProfile(customerId)
+    const profile = await getCustomerProfile(customerId)
     if (!profile) {
       throw Error(`No profile found for Stripe customer ${customerId}.`)
     }
 
+    console.log(`Found profile for customer '${customerId}'.`, profile)
+
     // Create message object
     const message: OneSignal.Notification = {
       app_id: _OnesignalAppId_,
-      include_external_user_ids: [profile],
+      include_email_tokens: [profile.email],
       email_subject: "You order confirmation",
       email_body: generateEmail(record.amount, record.currency),
     }

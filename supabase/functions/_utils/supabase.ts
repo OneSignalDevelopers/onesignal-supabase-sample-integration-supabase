@@ -76,20 +76,23 @@ export const getStripeCustomer = async (authHeader: string) => {
 }
 
 export const getCustomerProfile = async (customerId: string) => {
-  console.info(`Getting customer profile for ${customerId}`)
   try {
     const result = await supabaseClient
       .from("profiles")
-      .select("id")
+      .select("*")
       .eq("stripe_customer_id", customerId)
+
     if (result.error) {
       console.error("Error loading profile", result.error.message)
       return null
     }
 
-    console.log("Results", result)
+    if (!result.data || result.data.length === 0) {
+      console.error(`No profile found for user '${customerId}'`)
+      return null
+    }
 
-    return result.data[0].id
+    return result.data[0]
   } catch (error) {
     console.error("Could not load customer profile", error)
   }
