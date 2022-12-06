@@ -1,11 +1,6 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
-import {
-  onesignal,
-  _OnesignalAppId_,
-  _OnesignalRestApiKey_,
-  _OnesignalUserAuthKey_,
-} from "../_utils/config.ts"
+import { onesignal, _OnesignalAppId_ } from "../_utils/config.ts"
 import { getCustomerProfile } from "../_utils/supabase.ts"
 
 const generateMessage = (amount: number, currency: string) =>
