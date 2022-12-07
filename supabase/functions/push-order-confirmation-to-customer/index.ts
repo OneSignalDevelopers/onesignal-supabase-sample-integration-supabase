@@ -10,7 +10,7 @@ serve(async (req) => {
   try {
     const { record } = await req.json()
     const customerId = record.stripe_customer_id
-    const profile: string | null = await getCustomerProfile(customerId)
+    const profile = await getCustomerProfile(customerId)
     if (!profile) {
       throw Error(`No profile found for Stripe customer ${customerId}.`)
     }
@@ -18,7 +18,7 @@ serve(async (req) => {
     // Build OneSignal notification object
     const notification = new OneSignal.Notification()
     notification.app_id = _OnesignalAppId_
-    notification.include_external_user_ids = [profile]
+    notification.include_external_user_ids = [profile.id]
     notification.contents = {
       en: generateMessage(record.amount, record.currency),
     }
