@@ -1,10 +1,6 @@
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
-import {
-  onesignal,
-  _OnesignalAppId_,
-  _OnesignalUserAuthKey_,
-} from "../_utils/config.ts"
+import { onesignal, _OnesignalAppId_ } from "../_utils/config.ts"
 
 serve(async (req) => {
   // Create OneSignal client
@@ -20,11 +16,11 @@ serve(async (req) => {
     }
     notification.included_segments = ["Subscribed Users"]
 
-    // // Call OneSignal API to push notification
+    // Call OneSignal API to push notification
     const res = await onesignal.createNotification(notification)
-    console.log("OneSignal response", res)
+    console.info("Onesignal API", res)
 
-    return new Response(JSON.stringify(data), {
+    return new Response(JSON.stringify(res), {
       headers: { "Content-Type": "application/json" },
     })
   } catch (err) {
