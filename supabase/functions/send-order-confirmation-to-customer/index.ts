@@ -2,7 +2,7 @@ import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
 import { onesignal, _OnesignalAppId_ } from "../_utils/config.ts"
 import { getCustomerProfile } from "../_utils/supabase.ts"
-import { generatePushMessage } from "../_utils/helpers.ts"
+import { generateEmailMessage, generatePushMessage } from "../_utils/helpers.ts"
 
 serve(async (req) => {
   try {
@@ -14,12 +14,30 @@ serve(async (req) => {
     }
 
     // Build OneSignal notification object
-    const notification = new OneSignal.Notification()
-    notification.app_id = _OnesignalAppId_
-    notification.include_external_user_ids = [profile.id]
-    notification.contents = {
-      en: generatePushMessage(record.amount, record.currency),
+    let notification: OneSignal.Notification
+    if (profile.message_channel_preference === "MessageChannel.push") {
+      notification = {
+        app_id: _OnesignalAppId_,
+        include_external_user_ids: [profile.id],
+        contents: {
+          en: generatePushMessage(record.amount, record.currency),
+        },
+      }
+    } else if (profile.message_channel_preference === "MessageChannel.sms") {
+      // sms
+      notification = {
+        app_id: _OnesignalAppId_,
+      }
+    } else {
+      // default to email
+      notification = {
+        app_id: _OnesignalAppId_,
+        include_email_tokens: [profile.email],
+        email_subject: "You order confirmation",
+        email_body: generateEmailMessage(record.amount, record.currency),
+      }
     }
+
     const onesignalApiRes = await onesignal.createNotification(notification)
 
     return new Response(

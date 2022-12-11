@@ -2,11 +2,7 @@ import { serve } from "https://deno.land/std@0.131.0/http/server.ts"
 import * as OneSignal from "https://esm.sh/@onesignal/node-onesignal@1.0.0-beta7"
 import { onesignal, _OnesignalAppId_ } from "../_utils/config.ts"
 import { getCustomerProfile } from "../_utils/supabase.ts"
-
-const generateEmail = (amount: number, currency: string) =>
-  `<html><body>You just spent ${amount / 100} ${(
-    currency as String
-  ).toUpperCase()}. <a href="#">Unsubscribe</a></body></html>`
+import { generateEmailMessage } from "../_utils/helpers.ts"
 
 serve(async (req) => {
   try {
@@ -24,7 +20,7 @@ serve(async (req) => {
       app_id: _OnesignalAppId_,
       include_email_tokens: [profile.email],
       email_subject: "You order confirmation",
-      email_body: generateEmail(record.amount, record.currency),
+      email_body: generateEmailMessage(record.amount, record.currency),
     }
 
     const onesignalApiRes = await onesignal.createNotification(message)
