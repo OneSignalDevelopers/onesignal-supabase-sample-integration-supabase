@@ -9,9 +9,6 @@ ALTER TABLE IF EXISTS public.profiles DROP COLUMN IF EXISTS full_name;
 
 ALTER TABLE IF EXISTS public.profiles DROP COLUMN IF EXISTS last_name;
 
-ALTER TABLE IF EXISTS public.profiles
-    RENAME id TO updated_at;
-
 ALTER TABLE public.profiles
     ALTER COLUMN updated_at TYPE timestamp with time zone ;
 ALTER TABLE IF EXISTS public.profiles
