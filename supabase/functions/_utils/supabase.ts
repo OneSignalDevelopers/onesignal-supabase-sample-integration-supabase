@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0"
 import { _SupabaseUrl_, _SupabaseServiceRoleKey_, stripe } from "./config.ts"
 import { Database } from "./db_types.ts"
 
-const supabaseClient = createClient<Database>(
+export const supabaseClient = createClient<Database>(
   _SupabaseUrl_,
   _SupabaseServiceRoleKey_
 )
