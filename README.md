@@ -328,14 +328,6 @@ Our `console.logs` will appear here!
 
 ---
 
-###### Current OneSignal channels Implemented
-
-- [x] Mobile Push Notifications
-- [ ] Web Push Notifications (planned)
-- [ ] SMS Text Messages (planned)
-- [x] Email
-- [x] In-app Messages
-
 # ❤️ Developer Community
 
 For additional resources, please join the [OneSignal Developer Community](https://onesignal.com/onesignal-developers).
