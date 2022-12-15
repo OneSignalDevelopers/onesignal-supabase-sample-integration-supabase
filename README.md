@@ -12,12 +12,43 @@
   <hr />
 </div>
 
-
 # OneSignal + Supabase Sample Omni-channel Integration
 
 OneSignal makes engaging customers simple and is the fastest, most reliable service to send push notifications, in-app messages, SMS, and emails.
 
 This project demonstrates how to use OneSignal as an integration with [Supabase](https://supabase.com) to handle your messaging needs, including push notifications, SMS text messages, email, and in-app messaging. Feel free to use this sample as a reference for your own Supabase integration.
+
+###### Table of Contents
+
+- [OneSignal + Supabase Sample Omni-channel Integration](#onesignal--supabase-sample-omni-channel-integration)
+          - [Table of Contents](#table-of-contents)
+  - [🚦 Getting started](#-getting-started)
+  - [Setup OneSignal App](#setup-onesignal-app)
+    - [Setup iOS Platform](#setup-ios-platform)
+    - [Craft an In-App Message](#craft-an-in-app-message)
+  - [Setup Supabase Project](#setup-supabase-project)
+    - [Initialize Supabase project](#initialize-supabase-project)
+    - [Disable email confirmation authentication](#disable-email-confirmation-authentication)
+    - [Edit Database Triggers](#edit-database-triggers)
+    - [Create Edge Function](#create-edge-function)
+      - [Function Implementation](#function-implementation)
+    - [Set Environment Variables](#set-environment-variables)
+      - [Locally](#locally)
+      - [On Supabase](#on-supabase)
+      - [How to Remove Variable](#how-to-remove-variable)
+    - [Run Migrations](#run-migrations)
+    - [Deploy Edge Function](#deploy-edge-function)
+      - [Hosting locally](#hosting-locally)
+      - [To Production](#to-production)
+    - [Create Database Webhook](#create-database-webhook)
+          - [Example Database Webhook event](#example-database-webhook-event)
+  - [🚀🚀🚀 Launch Companion App](#-launch-companion-app)
+    - [Debugging](#debugging)
+      - [Inspect Supabase Edge Function Requests](#inspect-supabase-edge-function-requests)
+      - [Review Server Logs](#review-server-logs)
+- [❤️ Developer Community](#️-developer-community)
+  - [Show your support](#show-your-support)
+
 
 ## 🚦 Getting started
 
@@ -29,7 +60,7 @@ This project assumes that you already have a few things setup.
 - A Stripe account and the [Stripe CLI](https://stripe.com/docs/stripe-cli) v1.13.5 installed.
 - A Vercel account and the [Vercel CLI](https://vercel.com/docs/cli#) [v28.7.0](https://www.npmjs.com/package/vercel/v/28.7.0) installed (or anything capable of hosting a Next.js API).
 - A working Flutter dev environment and access to a mac for iOS-specific steps.
-- [Deno](https://github.com/denoland/deno_install) v1.28.0 installed.
+- [Deno v1.28.0](https://github.com/denoland/deno_install) installed and [configured](https://deno.land/manual@v1.28.3/getting_started/setup_your_environment).
 
 ## Setup OneSignal App
 
@@ -273,7 +304,7 @@ For complete instructions on creating a webhooks, please refer to the [Supabase 
 
 ## 🚀🚀🚀 Launch Companion App
 
-The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) can be built from source to run alongside this Supabase project.
+The [companion app](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-app) and [supporting API](https://github.com/onesignaldevelopers/onesignal-supabase-sample-integration-api) can be built from source to run alongside this Supabase project.
 
 ![App demo](/assets/aux/push-notification-demo.gif)
 
