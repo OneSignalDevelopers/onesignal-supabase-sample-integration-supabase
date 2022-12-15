@@ -19,6 +19,7 @@ serve(async (req) => {
       notification = {
         app_id: _OnesignalAppId_,
         include_external_user_ids: [profile.id],
+        channel_for_external_user_ids: "push",
         contents: {
           en: generatePushMessage(record.amount, record.currency),
         },
@@ -27,11 +28,17 @@ serve(async (req) => {
       // sms
       notification = {
         app_id: _OnesignalAppId_,
+        channel_for_external_user_ids: "sms",
+        name: "",
+        contents: {
+          en: generatePushMessage(record.amount, record.currency),
+        },
       }
     } else {
       // default to email
       notification = {
         app_id: _OnesignalAppId_,
+        channel_for_external_user_ids: "email",
         include_email_tokens: [profile.email],
         email_subject: "You order confirmation",
         email_body: generateEmailMessage(record.amount, record.currency),
